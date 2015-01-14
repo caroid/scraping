@@ -1,0 +1,24 @@
+# -*- coding : utf-8 -*-
+from selenium import webdriver
+
+driver = webdriver.Firefox()
+driver.get('http://www.paginasamarillas.com.co/busqueda/empresas-bogota?match=empresas')
+links = driver.find_elements_by_css_selector('.send.show-contact-window')
+
+companies = {}
+
+while n < 600:
+	next_btn = driver.find_element_by_css_selector('.arrow-results.aw-rtl02.pager-link')
+	for link in links:
+	    email = link.get_attribute('data-email')
+	    company = link.get_attribute('data-namecmp')
+	    if email not in companies:
+	    	companies[email] = company
+	    print email, company
+	try:
+		next_btn.next()
+		n += 1
+	except:
+		break
+
+driver.quit()
